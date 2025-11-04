@@ -1,43 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Yıldıza Âşık Gökyüzü</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gökyüzü ve Küçük Yıldız</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Intro ekranı -->
-  <section id="intro" class="screen">
-    <video id="introVideo" class="bg-video" autoplay muted loop playsinline>
-      <source src="intro.mp4" type="video/mp4">
-    </video>
-
-    <div class="overlay">
-      <h1 class="title">Hazır mısın?</h1>
-      <div class="buttons">
-        <button id="yesBtn" class="btn">Evet</button>
-        <button id="noBtn" class="btn ghost">Hayır</button>
-      </div>
+  <div class="intro-screen" id="intro">
+    <h1>Hazır mısın?</h1>
+    <div class="buttons">
+      <button id="yesBtn">Evet</button>
+      <button id="noBtn">Hayır</button>
     </div>
-  </section>
+  </div>
 
-  <!-- Film ekranı -->
-  <section id="filmSection" class="screen">
-    <video id="filmVideo" class="film-video" playsinline>
-      <source src="film.mp4" type="video/mp4">
+  <div class="film-container" id="film">
+    <video id="filmVideo" autoplay muted playsinline>
+      <source src="film.mp4" type="video/mp4" />
+      Tarayıcın bu videoyu desteklemiyor.
     </video>
-
-    <div id="captions" class="captions"></div>
-
-    <div id="finalOffer" class="final-offer hidden">
-      <p class="offer-text">Gökyüzün olarak sana yansıma yaptıkça gökyüzüme ait küçük yıldızım olmaya devam eder misin?</p>
-      <p class="credit">Altyazı: M.K.</p>
-      <button id="replayBtn" class="btn">Yeniden İzle</button>
+    <div class="overlay-text" id="overlayText">
+      <p>Gökyüzü küçük bir yıldıza bakarken, kendi içindeki karanlığı fark etti...</p>
     </div>
-
-    <button id="unmuteBtn" class="unmute">Sesi Aç</button>
-  </section>
+  </div>
 
   <script src="script.js"></script>
 </body>
