@@ -1,0 +1,22 @@
+/* Basit, mobil öncelikli stil */
+:root{--bg:#050816;--accent:#9bd6ff;--muted:#cbd5e1}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+.screen{position:relative;height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.bg-video, .film-video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;z-index:0}
+.overlay{position:relative;z-index:5;text-align:center;color:white;padding:20px;background:linear-gradient(180deg,rgba(0,0,0,0.25),rgba(0,0,0,0.45))}
+.title{font-size:clamp(24px,6vw,40px);letter-spacing:0.02em;margin-bottom:18px}
+.buttons{display:flex;gap:14px;justify-content:center}
+.btn{background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.12);color:white;padding:12px 22px;border-radius:10px;font-size:16px}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.18)}
+.film-video{z-index:0;filter:brightness(0.65) saturate(1.05)}
+.captions{position:relative;z-index:6;color:#fff;text-align:center;padding:30px 20px;font-size:18px;line-height:1.5;max-width:820px;margin:0 auto;pointer-events:none}
+.final-offer{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:20;background:rgba(0,0,0,0.7);color:white;padding:30px;gap:12px}
+.final-offer .offer-text{font-size:clamp(18px,4.2vw,28px);text-align:center;padding:0 12px}
+.final-offer .credit{opacity:0.8;font-size:14px}
+.hidden{display:none}
+.unmute{position:fixed;right:12px;bottom:12px;z-index:15;padding:8px 12px;border-radius:8px;background:rgba(0,0,0,0.45);color:white;border:1px solid rgba(255,255,255,0.08)}
+@media(min-width:900px){
+  .overlay{max-width:720px;border-radius:12px}
+  .captions{font-size:20px}
+}
