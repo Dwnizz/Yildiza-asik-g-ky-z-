@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yıldıza Âşık Gökyüzü</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Intro ekranı -->
+  <section id="intro" class="screen">
+    <video id="introVideo" class="bg-video" autoplay muted loop playsinline>
+      <source src="intro.mp4" type="video/mp4">
+    </video>
+
+    <div class="overlay">
+      <h1 class="title">Hazır mısın?</h1>
+      <div class="buttons">
+        <button id="yesBtn" class="btn">Evet</button>
+        <button id="noBtn" class="btn ghost">Hayır</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Film ekranı -->
+  <section id="filmSection" class="screen">
+    <video id="filmVideo" class="film-video" playsinline>
+      <source src="film.mp4" type="video/mp4">
+    </video>
+
+    <div id="captions" class="captions"></div>
+
+    <div id="finalOffer" class="final-offer hidden">
+      <p class="offer-text">Gökyüzün olarak sana yansıma yaptıkça gökyüzüme ait küçük yıldızım olmaya devam eder misin?</p>
+      <p class="credit">Altyazı: M.K.</p>
+      <button id="replayBtn" class="btn">Yeniden İzle</button>
+    </div>
+
+    <button id="unmuteBtn" class="unmute">Sesi Aç</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
