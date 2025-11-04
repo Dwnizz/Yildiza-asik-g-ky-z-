@@ -4,120 +4,167 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gökyüzü ve Küçük Yıldız</title>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%; height: 100%;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      width: 100%;
+      font-family: "Poppins", sans-serif;
       overflow: hidden;
-      font-family: 'Poppins', sans-serif;
-      background: black;
-      color: white;
+      color: #fff;
     }
-
-    .screen {
-      position: absolute;
-      width: 100%; height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      transition: opacity 2s ease;
-    }
-
-    .hidden { opacity: 0; pointer-events: none; }
 
     video {
-      position: absolute;
-      width: 100%; height: 100%;
-      object-fit: cover;
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
       z-index: -1;
-      filter: brightness(0.4);
+      object-fit: cover;
+    }
+
+    .intro-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      text-align: center;
+      transition: opacity 1s ease;
     }
 
     h1 {
-      font-size: 2.2em;
+      font-size: 2.5em;
       margin-bottom: 20px;
-      letter-spacing: 2px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
     }
 
     button {
-      background: transparent;
-      border: 2px solid white;
-      color: white;
-      font-size: 1.2em;
       padding: 10px 25px;
+      font-size: 1.2em;
+      border: none;
       border-radius: 25px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
       cursor: pointer;
-      margin: 10px;
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
 
     button:hover {
-      background: white;
-      color: black;
+      background: rgba(255, 255, 255, 0.4);
     }
 
-    .text {
-      font-size: 1.5em;
-      max-width: 85%;
+    .film-container {
+      position: relative;
+      height: 100vh;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .overlay-text {
+      position: absolute;
+      bottom: 10%;
+      width: 100%;
       text-align: center;
+      font-size: 1.5em;
+      opacity: 0;
+      animation: fadeText 8s ease forwards;
+    }
+
+    @keyframes fadeText {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .proposal {
+      position: absolute;
+      top: 40%;
+      width: 100%;
+      text-align: center;
+      font-size: 2em;
+      display: none;
       animation: fadeIn 3s ease forwards;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
-<body>
 
-  <!-- İlk ekran -->
-  <div class="screen" id="intro">
+<body>
+  <!-- 🎬 Arka Plan Videosu -->
+  <video id="filmVideo" autoplay muted playsinline>
+    <source src="film.mp4" type="video/mp4" />
+  </video>
+
+  <!-- 🔹 İlk Ekran -->
+  <div class="intro-screen" id="intro">
     <h1>Hazır mısın?</h1>
-    <div>
-      <button onclick="startFilm()">Evet</button>
-      <button onclick="alert('Belki sonra... 🌙')">Hayır</button>
+    <div class="buttons">
+      <button id="yesBtn">Evet</button>
+      <button id="noBtn">Hayır</button>
     </div>
   </div>
 
-  <!-- Film ekranı -->
-  <div class="screen hidden" id="film">
-    <video autoplay muted playsinline id="bgVideo">
-      <source src="https://cdn.pixabay.com/vimeo/239954026/sky-13223.mp4?width=640&hash=b0416e93b0a7e67cde653a1c041913f93293b0f4" type="video/mp4">
-    </video>
-    <div class="text" id="storyText"></div>
+  <!-- 🎥 Film Alanı -->
+  <div class="film-container" id="film">
+    <div class="overlay-text" id="overlayText">
+      <p>Gökyüzü, küçük bir yıldıza baktığında, içindeki sessiz boşluğu hissetti...</p>
+    </div>
+    <div class="proposal" id="proposal">
+      <p>🌌 Küçük yıldızım... Benimle çıkar mısın? 💫</p>
+    </div>
   </div>
 
   <script>
-    const intro = document.getElementById('intro');
-    const film = document.getElementById('film');
-    const text = document.getElementById('storyText');
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const intro = document.getElementById("intro");
+    const film = document.getElementById("film");
+    const video = document.getElementById("filmVideo");
+    const overlayText = document.getElementById("overlayText");
+    const proposal = document.getElementById("proposal");
 
-    const story = [
-      "Bir zamanlar gökyüzü, sadece dünyaya ait olduğunu sanırdı...",
-      "Her gün ona ışığını verir, her gece sessizce onu izlerdi.",
-      "Ta ki bir gece, küçük bir yıldız kayana kadar...",
-      "O yıldız, gökyüzünün dengesini altüst etti.",
-      "Gökyüzü artık dünyaya değil, o küçük yıldıza aitti.",
-      "Ve o an sordu; <br><br><b>Gökyüzün olarak sana yansıma yaptıkça,<br> gökyüzüme ait küçük yıldızım olmaya devam eder misin?</b> 💫"
-    ];
+    yesBtn.addEventListener("click", () => {
+      intro.style.opacity = "0";
+      setTimeout(() => {
+        intro.style.display = "none";
+        film.style.display = "flex";
+        video.play();
+        video.muted = false; // sesi aç
+      }, 1000);
 
-    function startFilm() {
-      intro.classList.add('hidden');
-      film.classList.remove('hidden');
+      // 2 dakikalık film simülasyonu (120 saniye)
+      setTimeout(() => {
+        overlayText.innerHTML = "<p>Ve gökyüzü, yıldızına sonsuz bir sevgiyle baktı...</p>";
+      }, 30000);
 
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i < story.length) {
-          text.innerHTML = story[i];
-          i++;
-        } else {
-          clearInterval(interval);
-        }
-      }, 6000); // her 6 saniyede bir sahne değişimi
-    }
+      setTimeout(() => {
+        overlayText.style.display = "none";
+        proposal.style.display = "block";
+      }, 110000);
+    });
+
+    noBtn.addEventListener("click", () => {
+      alert("Belki sonra... 🌙");
+    });
   </script>
-
 </body>
 </html>
