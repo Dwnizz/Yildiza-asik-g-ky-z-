@@ -4,27 +4,120 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gökyüzü ve Küçük Yıldız</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: black;
+      color: white;
+    }
+
+    .screen {
+      position: absolute;
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 2s ease;
+    }
+
+    .hidden { opacity: 0; pointer-events: none; }
+
+    video {
+      position: absolute;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.4);
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    button {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      font-size: 1.2em;
+      padding: 10px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 10px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: white;
+      color: black;
+    }
+
+    .text {
+      font-size: 1.5em;
+      max-width: 85%;
+      text-align: center;
+      animation: fadeIn 3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-  <div class="intro-screen" id="intro">
+
+  <!-- İlk ekran -->
+  <div class="screen" id="intro">
     <h1>Hazır mısın?</h1>
-    <div class="buttons">
-      <button id="yesBtn">Evet</button>
-      <button id="noBtn">Hayır</button>
+    <div>
+      <button onclick="startFilm()">Evet</button>
+      <button onclick="alert('Belki sonra... 🌙')">Hayır</button>
     </div>
   </div>
 
-  <div class="film-container" id="film">
-    <video id="filmVideo" autoplay muted playsinline>
-      <source src="film.mp4" type="video/mp4" />
-      Tarayıcın bu videoyu desteklemiyor.
+  <!-- Film ekranı -->
+  <div class="screen hidden" id="film">
+    <video autoplay muted playsinline id="bgVideo">
+      <source src="https://cdn.pixabay.com/vimeo/239954026/sky-13223.mp4?width=640&hash=b0416e93b0a7e67cde653a1c041913f93293b0f4" type="video/mp4">
     </video>
-    <div class="overlay-text" id="overlayText">
-      <p>Gökyüzü küçük bir yıldıza bakarken, kendi içindeki karanlığı fark etti...</p>
-    </div>
+    <div class="text" id="storyText"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const intro = document.getElementById('intro');
+    const film = document.getElementById('film');
+    const text = document.getElementById('storyText');
+
+    const story = [
+      "Bir zamanlar gökyüzü, sadece dünyaya ait olduğunu sanırdı...",
+      "Her gün ona ışığını verir, her gece sessizce onu izlerdi.",
+      "Ta ki bir gece, küçük bir yıldız kayana kadar...",
+      "O yıldız, gökyüzünün dengesini altüst etti.",
+      "Gökyüzü artık dünyaya değil, o küçük yıldıza aitti.",
+      "Ve o an sordu; <br><br><b>Gökyüzün olarak sana yansıma yaptıkça,<br> gökyüzüme ait küçük yıldızım olmaya devam eder misin?</b> 💫"
+    ];
+
+    function startFilm() {
+      intro.classList.add('hidden');
+      film.classList.remove('hidden');
+
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < story.length) {
+          text.innerHTML = story[i];
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 6000); // her 6 saniyede bir sahne değişimi
+    }
+  </script>
+
 </body>
 </html>
